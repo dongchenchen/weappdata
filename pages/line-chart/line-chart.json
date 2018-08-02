@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "wxChartComponent-line-chart": "/wxChartComponent/line-chart/line-chart"
+  }
+}

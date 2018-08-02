@@ -1,0 +1,61 @@
+/*wxcp: wxchartComponent*/
+.wxcp-linechart {
+    position: relative;
+    margin: 10rpx 0 30rpx 0;
+}
+
+.wxcp-wording {
+    font-family: 'PingFangSC-Regular', 'Microsoft Yahei';
+    font-size: 30rpx;
+    color: #888888;
+
+    line-height: 400rpx;
+    vertical-align: middle;
+
+    width: 100%;
+    text-align: center;
+}
+
+.wxcp-linechart-legend {
+    margin-left: 12rpx;
+    margin-top: 5rpx;
+    line-height: 36rpx;
+}
+.wxcp-linechart-legend_item{
+    display: inline-block;
+    padding: 20rpx 38rpx 5rpx 10rpx;
+    line-height: 36rpx;
+}
+
+.wxcp-linechart-legend_icon{
+    display: inline-block;
+    width: 30rpx;
+    height: 30rpx;
+    vertical-align: middle;
+    border-radius: 30rpx;
+    background-color: #c1c0c3;
+    border-color: #c1c0c3;
+    margin-right: 8rpx;
+}
+
+.wxcp-linechart-legend_text {
+    color: #B8B8B8;
+    font-family: 'PingFangSC-Light', 'PingFangSC-Regular', '.HelveticaNeueDeskInterface-MediumP4', 'Microsoft Yahei';
+    font-size: 26 rpx;
+    display: inline-block;
+    line-height: 36 rpx;
+    vertical-align: middle;
+}
+
+
+
+.wxcp-linechart-canvas_base{
+    position: relative;
+    margin: 10rpx 0 30rpx 0;
+}
+.wxcp-linechart-canvas_float{
+    z-index: 2;
+    position: absolute;
+    top: 0;
+}
+

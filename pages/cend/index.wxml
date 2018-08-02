@@ -1,0 +1,26 @@
+<view class="page">
+    <view class="page__bd">
+        <view class="weui-tab">
+           	<mp-header bindtapHeader="changeCondition"></mp-header>
+           	<mp-choose-type bindchooseType="changeType"></mp-choose-type>
+            <view class="weui-tab__panel">
+                <view class="weui-tab__content" hidden="{{activeCondition != 0}}">
+                    <view class="history-line">历史概况</view>
+                    <block wx:for="{{historyList}}" wx:key="{{index}}">
+                        <mp-trend-panel id="{{index}}" title="{{item.title}}" total_value="{{item.total_value}}"
+                        annular_ratio="{{item.annular_ratio}}" cycle_ratio="{{item.cycle_ratio}}" biweekly_ratio="{{item.biweekly_ratio}}">   
+                        <wxchart-line-chart canvas-data="{{canvasData}}" canvas-style="{{canvasStyle}}" canvas-option="{{canvasOption}}"></wxchart-line-chart>                         
+                        </mp-trend-panel>
+                    </block>
+                    <block wx:for="{{originalPVCharts}}" wx:key="{{index}}">
+                        <view>{{item.title}}</view>
+                        <wxchart-line-chart canvas-data="{{item.canvasData}}" canvas-style="{{item.canvasStyle}}" canvas-option="{{item.canvasOption}}"></wxchart-line-chart> 
+                    </block>
+                </view>
+                
+                <view class="weui-tab__content" hidden="{{activeCondition != 1}}">选项二的内容</view>
+                <view class="weui-tab__content" hidden="{{activeCondition != 2}}">选项三的内容</view>
+            </view>
+        </view>
+    </view>
+</view>

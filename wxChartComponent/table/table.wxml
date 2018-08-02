@@ -1,0 +1,24 @@
+<view wx:if="{{chartStatus == '0'}}">
+    <scroll-view scroll-x="{{true}}" style="{{style.table}}">
+        <view class="wxcp-table">
+            <view class="wxcp-table-header" style="{{style.header}}">
+                <view wx:for="{{header}}" wx:for-item="item" wx:for-index="idx"
+                      class="wxcp-table-header_ceil" style="{{item.cssStyle}}"
+                      bindtap="tapTable" data-type="header" data-col="{{idx}}" data-item="{{item}}">
+                    <text>{{item.content}}</text>
+                </view>
+            </view>
+            <view wx:for="{{body}}" wx:for-item="row" wx:for-index="ridx" class="wxcp-table-body"
+                  style="{{style.body}}">
+                <view wx:for="{{row}}" wx:for-item="item" wx:for-index="cidx"
+                      class="wxcp-table-body_ceil" style="{{item.cssStyle}}"
+                      bindtap="tapTable" data-type="body" data-row="{{ridx}}" data-col="{{cidx}}" data-item="{{item}}">
+                    <text>{{item.content}}</text>
+                </view>
+            </view>
+        </view>
+    </scroll-view>
+</view>
+<view wx:else class="wxcp-wording">{{chartStatus}}</view>
+
+

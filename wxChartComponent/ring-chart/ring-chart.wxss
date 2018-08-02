@@ -1,0 +1,68 @@
+.wxcp-wording {
+    font-family: 'PingFangSC-Regular', 'Microsoft Yahei';
+    font-size: 30rpx;
+    color: #888888;
+
+    line-height: 400rpx;
+    vertical-align: middle;
+
+    width: 100%;
+    text-align: center;
+}
+
+.wxcp-ringchart{
+    display: flex;
+    margin: 30rpx 20rpx 56rpx 20rpx;
+}
+.wxcp-ringchart-canvas{
+    flex: 1;
+    margin: auto auto;
+}
+
+.wxcp-ringchart-legend {
+    font-size: 24rpx;
+    font-family: 'PingFangSC-Regular', 'PingFangSC-Light', '.HelveticaNeueDeskInterface-MediumP4', 'Microsoft Yahei';
+    letter-spacing: 0;
+    color: #B4B4B4;
+    margin: auto 10 rpx auto 0;
+    width: auto;
+    min-width: 300rpx;
+}
+
+.wxcp-ringchart-legend_item{
+    line-height: 60rpx;
+    vertical-align: middle;
+}
+
+.wxcp-ringchart-legend_icon{
+    background-color: #FFFFFF;
+    width: 25rpx;
+    height: 25rpx;
+
+    display: inline-block;
+    border-radius: 3rpx;
+
+
+    line-height: 50rpx;
+    vertical-align: middle;
+}
+
+.wxcp-ringchart-legend_text{
+    margin-left: 20rpx;
+    line-height: 50rpx;
+    vertical-align: middle;
+}
+
+.wxcp-ringchart-legend_data{
+    margin-left: 10rpx;
+
+    line-height: 50rpx;
+    vertical-align: middle;
+}
+
+.wxcp-ringchart-legend_percentage{
+    margin-left: 10rpx;
+
+    line-height: 50rpx;
+    vertical-align: middle;
+}

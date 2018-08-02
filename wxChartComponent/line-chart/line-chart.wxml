@@ -1,0 +1,25 @@
+<view class="wxcp-linechart">
+    <view wx:if="{{chartStatus == '0'}}">
+        <view wx:if="{{legend.show}}" class="wxcp-linechart-legend" style="{{legend.style.legend}}">
+            <view wx:for="{{legend.value}}" wx:for-item="item" wx:for-index="idx" class="wxcp-linechart-legend_item"
+                  bindtap="tapLegend" data-idx="{{idx}}" wx:key="idx">
+                <view class="wxcp-linechart-legend_icon" style="{{legend.style.legend_icon}}; background-color:{{item.color}}"/>
+                <text class="wxcp-linechart-legend_text" style="{{legend.style.legend_text}}">{{item.text}}</text>
+            </view>
+        </view>
+        <view class="wxcp-linechart-canvas_base" bindtouchstart="bindtouchstart">
+            <canvas canvas-id="{{baseCanvasID}}"
+                    bindtouchstart="bindtouchstart"
+                    bindtouchmove="bindtouchmove"
+                    bindtouchend="bindtouchend"
+                    style="width:{{w}}px;height:{{h}}px"/>
+            <canvas class="wxcp-linechart-canvas_float" canvas-id="{{floatCanvasID}}"
+                    bindtouchstart="bindtouchstart"
+                    bindtouchmove="bindtouchmove"
+                    bindtouchend="bindtouchend"
+                    style="width:{{w}}px;height:{{h}}px"/>
+        </view>
+    </view>
+    <view wx:else class="wxcp-wording">{{chartStatus}}</view>
+</view>
+<slot></slot>

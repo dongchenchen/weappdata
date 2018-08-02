@@ -1,0 +1,4 @@
+<view>
+  <wxChartComponent-line-chart canvas-data="{{canvasData}}" canvas-option="{{canvasOption}}"></wxChartComponent-line-chart>
+</view>
+

@@ -1,0 +1,41 @@
+/**app.wxss**/
+
+@import "weui.wxss";
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+  margin: 0;
+} 
+
+.font-size-24 {
+	font-size: 24rpx;
+}
+
+mp-header {
+	height:150rpx;
+	display:block;
+	position:fixed;
+	top:0;
+	left:0;
+	right:0;
+	z-index:999;
+	background: #FFF;
+}
+
+mp-choose-type {
+	height:70rpx;
+	display:block;
+	padding:150rpx 20rpx 0rpx 50rpx;
+	z-index:0;
+}
+
+.weui-tab__panel {
+	padding-top:15rpx;
+}
+

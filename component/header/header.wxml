@@ -1,0 +1,21 @@
+<!-- <view>
+	<view class="header-info-area">
+		<view class="header-info" hover-class="info-highlight">整体概况</view>
+		<view class="header-info" hover-class="info-highlight">趋势详情</view>
+		<view class="header-info" hover-class="info-highlight">分布详情</view>
+	</view>
+	<view class="header-tab-area">
+		<view class="header-tab" hover-class="tab-highlight">总体</view>
+		<view class="header-tab" hover-class="tab-highlight">订阅号</view>
+		<view class="header-tab" hover-class="tab-highlight">服务号</view>
+	</view>
+</view> -->
+ <view class="weui-navbar">
+    <block wx:for="{{tabs}}" wx:key="{{index}}"> 
+        <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+            <view class="weui-navbar__title">{{item}}</view>
+        </view>
+    </block>
+    <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);">
+    </view>
+</view>

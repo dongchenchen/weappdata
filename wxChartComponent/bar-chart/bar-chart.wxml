@@ -1,0 +1,20 @@
+<view class="wxcp-barchart">
+    <view wx:if="{{chartStatus == '0'}}">
+        <view wx:if="{{legend.show}}" class="wxcp-barchart-legend" style="{{legend.style.legend}}">
+            <view wx:for="{{legend.value}}" wx:for-item="item" wx:for-index="idx" class="wxcp-barchart-legend-item"
+                  bindtap="tapLegend" data-idx="{{idx}}">
+                <view class="wxcp-barchart-legend-icon" style="{{legend.style.legend_icon}}; background-color:{{item.color}}"/>
+                <text class="wxcp-barchart-legend-text" style="{{legend.style.legend_text}}">{{item.text}}</text>
+            </view>
+        </view>
+        <view class="wxcp-barchart-canvas">
+            <canvas canvas-id="{{canvasID}}"
+                    bindtouchstart="bindtouchstart"
+                    bindtouchmove="bindtouchmove"
+                    bindtouchend="bindtouchend"
+                    style="width:{{w}}px;height:{{h}}px"/>
+        </view>
+    </view>
+    <view wx:else class="wxcp-wording">{{chartStatus}}</view>
+</view>
+<slot></slot>

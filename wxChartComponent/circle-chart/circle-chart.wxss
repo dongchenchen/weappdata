@@ -1,0 +1,48 @@
+/* wxChartComponent/circle-chart/circle-chart.wxss */
+
+.wxcp-wording {
+    font-family: 'PingFangSC-Regular', 'Microsoft Yahei';
+    font-size: 30rpx;
+    color: #888888;
+
+    line-height: 400rpx;
+    vertical-align: middle;
+
+    width: 100%;
+    text-align: center;
+}
+
+.wxcp-circlechart-canvas{
+    margin: auto auto;
+}
+.wxcp-circlechart-legend{
+    font-size: 24rpx;
+    font-family: 'PingFangSC-Regular', 'PingFangSC-Light', '.HelveticaNeueDeskInterface-MediumP4', 'Microsoft Yahei';
+    letter-spacing: 0;
+    color: #B4B4B4;
+    margin-top: 30rpx;
+}
+.wxcp-circlechart-legend_item{
+    display: inline-block;
+    line-height: 50rpx;
+    vertical-align: middle;
+}
+.wxcp-circlechart-legend_icon{
+    display: inline-block;
+    line-height: 50rpx;
+    vertical-align: middle;
+}
+.wxcp-circlechart-legend_text{
+    margin-left: 20rpx;
+    line-height: 50rpx;
+    vertical-align: middle;
+}
+.wxcp-circlechart-legend_value{
+    line-height: 50rpx;
+    vertical-align: middle;
+}
+
+.wxcp-circlechart-legend_percentage{
+    line-height: 50rpx;
+    vertical-align: middle;
+}

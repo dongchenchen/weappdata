@@ -1,0 +1,24 @@
+<view class="weui-flex__item panel-area">
+	<view class="panel-area_content">
+		<view class="panel-title">{{title}}</view>
+		<view >
+			<view>{{total_value}}</view>
+			<view></view>
+		</view>
+		<view class="">
+			<view class="ratio-area">
+				<view class="ratio-area_name">日环比</view>
+				<view class="ratio-area_data {{annular_ratio > 0 ? 'increase' : 'decrease'}}">{{annular_ratio}}%</view>
+			</view>
+			<view class="ratio-area">
+				<view class="ratio-area_name">周同比</view>
+				<view class="ratio-area_name {{cycle_ratio > 0 ? 'increase' : 'decrease'}}">{{cycle_ratio}}%</view>
+			</view>
+			<view class="ratio-area">
+				<view class="ratio-area_name">双周同比</view>
+				<view class="ratio-area_name {{biweekly_ratio > 0 ? 'increase' : 'decrease'}}">{{biweekly_ratio}}%</view>
+			</view>
+		<slot></slot>
+		</view>
+	</view>
+</view>

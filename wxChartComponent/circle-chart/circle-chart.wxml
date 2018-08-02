@@ -1,0 +1,17 @@
+<view wx:if="{{chartStatus == '0'}}" class="wxcp-circlechart">
+    <view class="wxcp-circlechart-canvas">
+        <canvas canvas-id="{{baseCanvasID}}" style="width:{{w}}px;height:{{h}}px; margin:auto auto;"/>
+        <!--<canvas canvas-id="{{floatCanvasID}}" style="width:{{w}}rpx;height:{{h}}rpx; margin:auto auto;"/>-->
+    </view>
+    <view wx:if="{{legend.show}}" class="wxcp-circlechart-legend" style="{{legend.style.legend}}">
+        <view wx:for="{{legend.value}}" wx:for-item="item" wx:for-index="idx" class="wxcp-circlechart-legend_item"
+              bindtap="tapLegend" data-idx="{{idx}}">
+            <view class="wxcp-circlechart-legend_icon" style="{{legend.style.legend_icon}} background-color:{{item.color}}"/>
+            <text class="wxcp-circlechart-legend_text" style="{{legend.style.legend_text}}">{{item.text}}</text>
+            <text class="wxcp-circlechart-legend_value" style="{{legend.style.legend_value}}">{{item.value}}</text>
+            <text class="wxcp-circlechart-legend_percentage" style="{{legend.style.legend_percentage}}">{{item.percentage}}</text>
+        </view>
+    </view>
+</view>
+<view wx:else class="wxcp-wording">{{chartStatus}}</view>
+<slot></slot>

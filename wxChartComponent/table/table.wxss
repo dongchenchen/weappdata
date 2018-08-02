@@ -1,0 +1,29 @@
+.wxcp-table {
+    /*overflow-x: scroll;*/
+    /*width: 0;*/
+    display: table;
+    border-collapse:collapse;
+}
+
+.wxcp-table-header {
+    display: table-row;
+}
+
+.wxcp-table-header_ceil {
+    display: table-cell;
+}
+
+.wxcp-table-body {
+    display: table-row;
+}
+
+.wxcp-table-body_ceil {
+    display: table-cell;
+}
+
+.color{
+    /* fedcd5 FEB4AF, d46fc2*/
+    color: #FEF1EC;
+    background-color: #FDD0C8;
+}
+

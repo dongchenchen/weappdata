@@ -1,0 +1,52 @@
+{
+  "pages":[
+    "pages/cend/index", 
+    "pages/bend/index", 
+    "pages/mpend/index", 
+    "pages/theme/index", 
+    "pages/focus/index",
+    "pages/line-chart/line-chart"  
+  ],
+
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle":"black"
+  },
+
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#ff4a4a",
+    "borderStyle": "white",
+    "backgroundColor": "#ffffff",
+    "list": [{
+      "pagePath": "pages/bend/index",
+      "text": "B端",
+      "iconPath": "images/bend.png",
+      "selectedIconPath": "images/bend_click.png"
+    },{
+      "pagePath": "pages/cend/index",
+      "text": "C端",
+      "iconPath": "images/cend.png",
+      "selectedIconPath": "images/cend_click.png"
+    },{
+      "pagePath": "pages/mpend/index",
+      "text": "公众号",
+      "iconPath": "images/mp.png",
+      "selectedIconPath": "images/mp_click.png"
+    },{
+      "pagePath": "pages/theme/index",
+      "text": "专题",
+      "iconPath": "images/theme.png",
+      "selectedIconPath": "images/theme_click.png"
+    },{
+      "pagePath": "pages/focus/index",
+      "text": "运营关注",
+      "iconPath": "images/focus.png",
+      "selectedIconPath": "images/focus_click.png"
+    }
+  ]
+  }
+
+}

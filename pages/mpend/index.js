@@ -1,0 +1,4 @@
+const appInstance = getApp();
+Page({
+
+	})

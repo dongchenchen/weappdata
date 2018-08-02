@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "C端",
+  "usingComponents": {
+    "mp-header": "/component/header/header",
+    "mp-choose-type": "/component/choose_type/choose_type",
+    "mp-trend-panel": "/component/trend_panel/trend_panel",
+    "wxchart-line-chart":"/wxChartComponent/line-chart/line-chart"
+  }
+}
