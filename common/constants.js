@@ -4,9 +4,23 @@
 */
 
 const CGI_DOMAIN = 'https://mp.weixin.qq.com';
-const CGI_PREFIX = '/weappdata';
+const CGI_PREFIX = '/wxastatistics/biz_v2_data';
 
 export const PREFIX_URL = CGI_DOMAIN + CGI_PREFIX;
+
+export const STORAGE_KEY = {
+  SESSION: 'app_session',
+  DRAFT: 'draft_article',
+  INDEX_DATA:"index_data"
+}
+
+/**
+ * 各种返回码
+ */
+export const RET_CODE = {
+  NO_CREATE_AUTHOR: 10000, // 10000: 未创建作者，需要创建
+  SESSION_EXPIRE: 200003, // session失效
+}
 
 export const CONDITION_NAME = {
 	pay_pv: '赞赏详情',
@@ -39,4 +53,10 @@ export const PV_CHART_LEGEND = {
 		share: '分享页',
 		other: '其他'
 	}
+}
+
+export const REQUESY_TYPE = {
+	tab_data: 1,
+	tab_trend_data: 2,
+	pv_data: 3
 }

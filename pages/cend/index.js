@@ -3,7 +3,9 @@ const Constants = require('../../common/constants');
 const Config = require('../../wxChartComponent/line-chart/config-file');
 const StyleConfig = require('../../common/line_style_config');
 const Util = require('../../utils/util');
-const testData = require('../../common/test.js')
+const testData = require('../../common/test');
+const Request = require('../../common/request');
+const Api = require('../../common/api');
 
 Page({
 	data:{
@@ -44,20 +46,19 @@ Page({
 	},
 
 	getTabData: function(timeStamp) {
-		let inner_datalist = [1];
+		let inner_datalist = Constants.REQUESY_TYPE.tab_data;
 		let tab_condition_list = [];
-		// wx.request({
-		// 	url:`${Constants.PREFIX_URL}`,
-		// 	data: {
-		// 		inner_date_timestamp: timeStamp,
-		// 		inner_datalist: inner_datalist
-		// 	},
-		// 	success: function(res) {
-		let res = testData.tabConditionResult;
-				if(res.RETN == 0) {
+		Request.request({
+			url:`${Constants.PREFIX_URL}`,
+			data: {
+				innerdate_timestamp: timeStamp,
+				innerdatalist: inner_datalist,
+				innerservicetype: 'all'
+			}
+		}).then((res = {}) =>{
+			if(res.RETN == 0) {
 					let result = res.resp.list;
-					let item = null;
-					
+					let item = null;					
 					for(let item of result) {
 						let tab_condition = {};
 						tab_condition.index_key = item.index_key;
@@ -71,28 +72,28 @@ Page({
 
 					this.setData({
 						historyList: tab_condition_list
-					})					
+					})	
 				}
-		// 	}
-		// })		
+			},err => {
+
+			})		
 	},
 
 	getTabLineData(timeStamp) {
-		let inner_datalist = [1];
+		let inner_datalist = Constants.REQUESY_TYPE.tab_trend_data;
 		let begin_timeStamp = timeStamp;
 		let twoWeekAgoTimeStamp = Util.twoWeekBeforeTimeStamp(begin_timeStamp);
-		let tabLineList = [];
-
-		
-		// wx.request({
-		// 	url:`${Constants.PREFIX_URL}`,
-		// 	data: {
-		// 		inner_begin_timestamp: begin_timeStamp,
-		// 		inner_end_timestamp: twoWeekAgoTimeStamp,
-		// 		inner_datalist: inner_datalist
-		// 	},
-		// 	success: function(res) {
-			let res = testData.tabLineResult();
+		let tabLineList = [];		
+		Request.request({
+			url:`${Constants.PREFIX_URL}`,
+			data: {
+				innerbegin_timestamp: twoWeekAgoTimeStamp,
+				innerend_timestamp: begin_timeStamp,
+				innerdatalist: inner_datalist,
+				innerservicetype: 'all'
+			}
+		}).then((res = {}) =>{
+			// let res = testData.tabLineResult();
 				if(res.RETN == 0) {
 					let result = res.resp.list;
 					for(let item of result) {
@@ -122,25 +123,27 @@ Page({
 						tabLineList: tabLineList
 					})					
 				}
-		// 	}
-		// })		
+			},err => {
+
+			})
+			
 	},
 
 	getPVLineData(timeStamp) {
-		let inner_datalist = [1];
+		let inner_datalist = Constants.REQUESY_TYPE.pv_data;
 		let begin_timeStamp = timeStamp;
 		let twoWeekAgoTimeStamp = Util.twoWeekBeforeTimeStamp(begin_timeStamp);
 		let pvLineList = [];
 		
-		// wx.request({
-		// 	url:`${Constants.PREFIX_URL}`,
-		// 	data: {
-		// 		inner_begin_timestamp: begin_timeStamp,
-		// 		inner_end_timestamp: twoWeekAgoTimeStamp,
-		// 		inner_datalist: inner_datalist
-		// 	},
-		// 	success: function(res) {
-			let res = testData.PVLineDate();
+		Request.request({
+			url:`${Constants.PREFIX_URL}`,
+			data: {
+				innerbegin_timestamp: twoWeekAgoTimeStamp,
+				innerend_timestamp: begin_timeStamp,
+				innerdatalist: inner_datalist,
+				innerservicetype: 'all'
+			}
+		}).then((res = {}) =>{
 				if(res.RETN == 0) {
 					let result = res.resp.list;
 					for(let item of result) {
@@ -171,8 +174,9 @@ Page({
 						pvLineList: pvLineList
 					})					
 				}
-		// 	}
-		// })		
+			},err => {
+
+			})		
 	},
 
 	//日期选择
