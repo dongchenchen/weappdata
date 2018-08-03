@@ -11,8 +11,60 @@ page,
     text-align: center;
 }
 
-.history-line {
+.line-alone {
 	text-align: left;
-	padding:20rpx 0rpx 20rpx 20rpx;
-	font-size:40rpx;
+	padding:20rpx 20rpx 20rpx 20rpx;
+	font-size:15px;
 }
+
+.date-area_left {
+	display: inline-block;
+}
+
+.date-area_right {
+	display: inline-block;
+	float:right;
+	padding:5rpx 50rpx 0rpx 0rpx;
+	font-size:30rpx;
+}
+
+.picker .icon-area {
+	width:20rpx;
+	height:20rpx;
+	display: inline-block;	
+}
+
+.picker .icon-area .icon-drop {	
+	float:right;
+	margin-top:1rpx;
+	font-size: 0;
+    line-height: 0;
+    border-width: 10rpx;
+    border-color: #000;
+    border-bottom-width: 0;
+    border-style: dashed;
+    border-top-style: solid;
+    border-left-color: transparent;
+    border-right-color: transparent;
+}
+
+
+.chart-area {
+	text-align: left;
+	font-size: 14px;
+	min-height: 500rpx;
+	max-height: 800rpx;
+	padding: 2rpx 10rpx 2rpx 10rpx; 
+	border-bottom: 5px solid #f3f3f3;
+}
+
+
+
+.chart-area .chart-area_title {
+	padding: 20rpx 0rpx 0rpx 10rpx;
+}
+
+.chart-area .chart-area_canvas {
+	padding: 10rpx 10rpx 0rpx 10prx;
+}
+

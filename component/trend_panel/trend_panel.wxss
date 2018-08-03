@@ -1,7 +1,6 @@
 @import "../../weui.wxss"
 
 .panel-area {
-	height:350rpx;
 	width:180rpx;
 	border:1rpx solid #f3f3f3;
 	border-radius:1rpx;
@@ -17,13 +16,17 @@
 	font-size: 24rpx;		
 }
 
+.value-area {
+	font-size: 28rpx;	
+}
+
 .ratio-area {
 	font-size: 20rpx;
 }	
 
 .ratio-area .ratio-area_name {
 	display: inline;
-	padding: 2rpx 10rpx 5rpx 2rpx;
+	padding: 2rpx 5rpx 5rpx 2rpx;
 }
 
 .ratio-area .ratio-area_data {
@@ -37,3 +40,4 @@
 .ratio-area .decrease{
 	color: red;
 }
+

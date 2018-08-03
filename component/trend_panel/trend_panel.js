@@ -7,7 +7,7 @@ Component({
 		},
 		//总金额或次数
 		'total_value': {
-			type: Number
+			type: String
 		},
 		//日环比
 		'annular_ratio': {

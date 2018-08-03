@@ -1,9 +1,8 @@
 <view class="weui-flex__item panel-area">
 	<view class="panel-area_content">
 		<view class="panel-title">{{title}}</view>
-		<view >
+		<view class="value-area">
 			<view>{{total_value}}</view>
-			<view></view>
 		</view>
 		<view class="">
 			<view class="ratio-area">

@@ -42,7 +42,7 @@ Page({
             };
             for (var cnt = 0; cnt < linePointCount; cnt++) {
                 // var val = cnt * (li + 1);
-                var val = __getNumber();
+                var val = Math.random();
                 line.point.push({
                     value: val,
                     flag: '标签:' + val
@@ -51,12 +51,12 @@ Page({
             canvasData.line.push(line);
         }
 
-        for (var cnt = 0; cnt < linePointCount; cnt++) {
-            canvasData.commFlag.push("公共浮层--" + cnt);
-        }
-        for (var cnt = 0; cnt < linePointCount; cnt++) {
-            canvasData.xCoordinate.push(cnt);
-        }
+        // for (var cnt = 0; cnt < linePointCount; cnt++) {
+        //     canvasData.commFlag.push("公共浮层--" + cnt);
+        // }
+        // for (var cnt = 0; cnt < linePointCount; cnt++) {
+        //     canvasData.xCoordinate.push(cnt);
+        // }
 
         var Config = require('../../wxChartComponent/line-chart/config-file.js');
 

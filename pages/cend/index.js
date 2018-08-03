@@ -1,164 +1,190 @@
 const appInstance = getApp();
 const Constants = require('../../common/constants');
 const Config = require('../../wxChartComponent/line-chart/config-file');
-const styleConfig = require('../../common/line_style_config');
+const StyleConfig = require('../../common/line_style_config');
+const Util = require('../../utils/util');
+const testData = require('../../common/test.js')
+
 Page({
 	data:{
 		activeCondition : 0,
-		activeChooseType : 0,
-		historyList: [{
-			title:'赞赏详情',
-			total_value:200, 
-			annular_ratio:2.05, 
-			cycle_ratio:1.05, 
-			biweekly_ratio:2.05,
-			canvasData: {
-				line:[{
-					legend:'最新两周',
-					point:[
-						{
-							value: 2
-						}
-					]
-				}]
-			}
-		},
-		{
-			title:'赞赏详情',
-			total_value:200, 
-			annular_ratio:2.05, 
-			cycle_ratio:1.05, 
-			biweekly_ratio:2.05,
-			canvasData: {}
-		},
-		{
-			title:'赞赏详情',
-			total_value:200, 
-			annular_ratio:2.05, 
-			cycle_ratio:1.05, 
-			biweekly_ratio:2.05,
-			canvasData: {}
-		},
-		{
-			title:'赞赏详情',
-			total_value:200, 
-			annular_ratio:2.05, 
-			cycle_ratio:1.05, 
-			biweekly_ratio:2.05,
-			canvasData: {}
-		}],
-		originalPVCharts: [{
-			title:'hahah',
-
-		}]
+		activeChooseType : 0		
 	},
 
 	onLoad: function() {
-		let nowTimeStamp = new Date().getTime();
-		let inner_datalist = 1;
+		//获取当前日期
+		this.initGetDate();
+
+		let timeStamp = Util.yesterdayTimeStamp();
+		
+		this.getData(timeStamp);
+	},
+
+
+	onReady: function() {
+	},
+
+	initGetDate: function() {
+		let currentDate = Util.formateDate(new Date());
+		this.setData({
+			chooseDate: currentDate,
+			currentDate: currentDate
+		})
+	},
+
+	getData: function(timeStamp) {
+		//获得tab中概况数据
+		this.getTabData(timeStamp);
+
+		//获取tab中近两周折线数据
+		this.getTabLineData(timeStamp);
+
+		//获得PV折线图数据
+		this.getPVLineData(timeStamp);
+	},
+
+	getTabData: function(timeStamp) {
+		let inner_datalist = [1];
 		let tab_condition_list = [];
 		// wx.request({
 		// 	url:`${Constants.PREFIX_URL}`,
 		// 	data: {
-		// 		inner_date_timestamp: nowTimeStamp,
+		// 		inner_date_timestamp: timeStamp,
 		// 		inner_datalist: inner_datalist
 		// 	},
 		// 	success: function(res) {
-				// if(res.RETN == 0) {
-				// 	let result = res.resp.list;
-				// 	for(let item in result) {
-				// 		let tab_condition = {};
-				// 		tab_condition.title = Constants.CONDITION_NAME[item.index_key];
-				// 		tab_condition.total_value = item.index_val;
-				// 		tab_condition.annular_ratio = item.index_comp_day_val;
-				// 		tab_condition.cycle_ratio = item.index_comp_week_val;
-				// 		tab_condition.biweekly_ratio = item.index_comp_biweek_val;
-				// 		let canvasData = {
-				// 			line: [{
-				// 				legend: '双周折线',
-				// 	            hidden: false,
-				// 	            point: []
-				// 			}],
-				// 			 commFlag: [], 
-				// 			 xCoordinate: []
-				// 		};
-				// 		for(let point in item.index_point) {
-				// 			canvasData.line[0].point.push(point.point_val);
-				// 		}
-
-				// 		tab_condition.canvasData = canvasData;
-				// 		tab_condition_list.push(tab_condition);
-				// 	}
+		let res = testData.tabConditionResult;
+				if(res.RETN == 0) {
+					let result = res.resp.list;
+					let item = null;
 					
-				// }
+					for(let item of result) {
+						let tab_condition = {};
+						tab_condition.index_key = item.index_key;
+						tab_condition.title = Constants.CONDITION_NAME[item.index_key];
+						tab_condition.total_value = Util.formatToZh(item.index_val);
+						tab_condition.annular_ratio = Util.formatDouble(item.index_comp_day_val);
+						tab_condition.cycle_ratio = Util.formatDouble(item.index_comp_week_val);
+						tab_condition.biweekly_ratio = Util.formatDouble(item.index_comp_biweek_val);
+						tab_condition_list.push(tab_condition);						
+					}
+
+					this.setData({
+						historyList: tab_condition_list
+					})					
+				}
 		// 	}
-		// })
-		// this.setData({
-		// 	historyList: tab_condition_list
-		// })
-		
+		// })		
 	},
 
-	onReady: function() {
+	getTabLineData(timeStamp) {
+		let inner_datalist = [1];
+		let begin_timeStamp = timeStamp;
+		let twoWeekAgoTimeStamp = Util.twoWeekBeforeTimeStamp(begin_timeStamp);
+		let tabLineList = [];
+
+		
 		// wx.request({
 		// 	url:`${Constants.PREFIX_URL}`,
-		// 	data:{
-
+		// 	data: {
+		// 		inner_begin_timestamp: begin_timeStamp,
+		// 		inner_end_timestamp: twoWeekAgoTimeStamp,
+		// 		inner_datalist: inner_datalist
 		// 	},
 		// 	success: function(res) {
-
+			let res = testData.tabLineResult();
+				if(res.RETN == 0) {
+					let result = res.resp.list;
+					for(let item of result) {
+						let tabLine = {};
+						tabLine.key = item.index_key;
+						let canvasData = {
+							line: [{
+								legend: '双周折线',
+					            hidden: false,
+					            point: []
+							}],
+							commFlag: [], 
+							xCoordinate: []
+						};						
+						for(let point of item.index_point) {
+							let line_point = {
+								value: Util.formatDouble(point.point_val)
+							};
+							canvasData.line[0].point.push(line_point);
+						}
+						tabLine.canvasData = canvasData;
+						tabLine.canvasOption = Config.getOption();
+						tabLine.canvasStyle = StyleConfig.litte_line_style;
+						tabLineList.push(tabLine);
+					}
+					this.setData({
+						tabLineList: tabLineList
+					})					
+				}
 		// 	}
-		// })
-		// let canvasData = {line: []};
-		// let line = {
-		// 	legend: '最新两周',
-		// 	point: []
-		// }
-		
-		// for(let i = 0; i < 20; i++) {
-		// 	let point = {
-		// 		val: i
-		// 	}
-		// 	line.point.push(point);
-		// }
-		// canvasData.line.push(line);
-
-		// for(let i = 0; i < this.data.historyList.length; i++) {
-		// 	this.data.historyList.canvasData = canvasData;
-		// }
-		var canvasData = {line: [], commFlag: [], xCoordinate: []};        
-        var line = {
-            legend: '图例',
-            hidden: false,
-            point: []
-        };
-        for (var cnt = 0; cnt < 14; cnt++) {
-            // var val = cnt * (li + 1);
-            var val = cnt;
-            line.point.push({
-                value: val,
-                flag: '标签:' + val
-            })
-        }
-        canvasData.line.push(line);
-        let Config = require('../../wxChartComponent/line-chart/config-file.js');        
-        
-        let originalPVCharts = [];
-        for(let i = 0; i < 3; i++) {
-        	originalPVCharts.push({
-        		'title': '测试',
-        		'canvasData': canvasData,
-	            "canvasOption": Config.getOption(),
-	            "canvasStyle": styleConfig.common_line_style
-        	})
-        }  
-        this.setData({
-            'canvasData': canvasData,
-            "canvasOption": Config.getOption(),
-            "canvasStyle": styleConfig.litte_line_style,
-            'originalPVCharts': originalPVCharts
-        }); 
+		// })		
 	},
+
+	getPVLineData(timeStamp) {
+		let inner_datalist = [1];
+		let begin_timeStamp = timeStamp;
+		let twoWeekAgoTimeStamp = Util.twoWeekBeforeTimeStamp(begin_timeStamp);
+		let pvLineList = [];
+		
+		// wx.request({
+		// 	url:`${Constants.PREFIX_URL}`,
+		// 	data: {
+		// 		inner_begin_timestamp: begin_timeStamp,
+		// 		inner_end_timestamp: twoWeekAgoTimeStamp,
+		// 		inner_datalist: inner_datalist
+		// 	},
+		// 	success: function(res) {
+			let res = testData.PVLineDate();
+				if(res.RETN == 0) {
+					let result = res.resp.list;
+					for(let item of result) {
+						let pvLine = {};
+						pvLine.key = item.index_key;
+						let canvasData = {line:[], commFlag: [], xCoordinate: Util.getXCoordinates(timeStamp)};
+						let legendList = Constants.PV_CHART_LEGEND[item.index_key];
+						for(let line of item.line) {
+							let lineItem = {hidden: false};
+							lineItem.legend = legendList[line.key];
+							lineItem.point = [];
+							for(let point of line.index_point) {
+								let line_point = {
+									value: Util.formatDouble(point.point_val),
+									flag: Util.formatDouble(point.point_val)
+								}
+								lineItem.point.push(line_point);
+							}
+							canvasData.line.push(lineItem);							
+						}
+						pvLine.title = Constants.PV_CHART_NAME[pvLine.key];
+						pvLine.canvasData = canvasData;
+						pvLine.canvasOption = StyleConfig.common_line_option;
+						pvLine.canvasStyle = StyleConfig.common_line_style;
+						pvLineList.push(pvLine);
+					}
+					this.setData({
+						pvLineList: pvLineList
+					})					
+				}
+		// 	}
+		// })		
+	},
+
+	//日期选择
+	bindDateChange(e) {
+		this.setData({
+			chooseDate: e.detail.value
+		});
+
+		let timeStamp = Util.getTimeStamp(e.detail.value);
+		this.getData(timeStamp);
+	},
+
 
 	changeCondition(option) {
 		this.setData({

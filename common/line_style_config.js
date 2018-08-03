@@ -119,9 +119,50 @@ export const litte_line_style = {
         }
 }
 
+export const common_line_option = {
+    
+        //方案1
+        // points：['#42C642', '#FFAA00', '#00C0C8'],
+        // bgColor：['rgba(66, 198, 66, 0.2)', 'rgba(255, 170, 0, 0.1)', 'rgba(0, 192, 200, 0.1)'],
+
+        //配色方案二：
+        //points：['#7587DB', '#FFAA00', '#00C5DC'],
+        //bgColor：['rgba(117, 135, 219, 0.2)', 'rgba(255, 170, 0, 0.1)', 'rgba(0, 197, 220, 0.1)'],
+
+        seriesColor: ['#7587DB', '#FFAA00', '#00C5DC', '#42C642', '#4b4d50'],      //线段颜色
+        everyLineBgColor: [],
+        legendCanControlShow: true,     //图例可以控制线段的展示与否
+        moveCanShowDataFlag: true,      //手机滑动可以查看对应数据标签
+
+        valueToFixed: 2,                //数据含小数，规整为几位小数, 默认2位
+           valueToCollated: [
+            {rangeStart: 0, rangeEnd: 1e4, base: 1, wording: ''},
+            {rangeStart: 1e4, rangeEnd: 1e5, base: 1e3, wording: '千'},   //range: {x | 1000 <= x < 10000}  9999 -> 9.99千
+            {rangeStart: 1e5, rangeEnd: 1e8, base: 1e4, wording: '万'},
+            {rangeStart: 1e8, rangeEnd: 1e9, base: 1e7, wording: '千万'},
+            {rangeStart: 1e9, rangeEnd: Infinity, base: 1e8, wording: '亿'},
+        ], 
+             //数据规整                          //数据规整
+        valueUseComma: true,            //数据是否加千位分隔符
+
+        yCoordinateFixedMax: undefined,        //y坐标固定最大值
+        yCoordinateFixedMin: undefined,        //y坐标固定最小值
+        yCoordinateDependOnShowData: true,     //y坐标依赖于只展示的线段
+
+        lineFixedMaxPointCount: undefined,      //线段固定最大点个数  <= 0 自动判断 max{line.points.length，xCoordinate}
+        lineExceedPointCountNoJoinStyle: 30,    //线段上的数据点超过30个点后无交点样式
+
+
+        xCoordinateFixedCount: 10, //几个x轴坐标，最好是可以被 lineFixedMaxCount 整除；以及几条平行y轴的网格线， 默认7个 , 当不能整除时候，只能大概表示稀疏度
+        yCoordinateFixedCount: 5,  //几个y轴坐标, 必须2个起步， 否则默认4个。以及几条平行x轴的网格线，
+
+        sizeUnit: 'rpx',           //只支持 px 或 rpx 俩种边距单位, 调控style里面各种边距
+   
+}
+
 export const common_line_style = {
     screen: {
-            w: 750,     // 为0时，出错
+            w: 700,     // 为0时，出错
             h: 400,     // 为0时，出错
             margin: {
                 top: 30, right: 30, bottom: 30, left: 30,
@@ -151,14 +192,14 @@ export const common_line_style = {
                 width: 1,       //单位为 canvasOption.sizUint;
             },
             parallelY: {        //平行y轴的网格线
-                show: true,
+                show: false,
                 color: '#e8e8e8',
                 width: 1,       //单位为 canvasOption.sizUint;
             }
         },
         coordinateSystem: {     //坐标系
             xAxis: {
-                show: false,
+                show: true,
                 color: '#C6C6C6',
                 width: 2,       //单位为 canvasOption.sizUint;
             },          //x轴
@@ -180,7 +221,7 @@ export const common_line_style = {
                 marginBottom: 20,   //单位为 canvasOption.sizUint;
             },    //横坐标
             yCoordinate: {
-              show: false,
+              show: true,
                 fontSize: 24,       //单位为 canvasOption.sizUint;
                 fontFamily: 'xxx',
                 fontWeight: undefined,
