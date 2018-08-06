@@ -6,6 +6,7 @@ const Util = require('../../utils/util');
 const testData = require('../../common/test');
 const Request = require('../../common/request');
 const Api = require('../../common/api');
+const DataFormat = require('../../utils/transform_data');
 
 Page({
 	data:{
@@ -55,25 +56,24 @@ Page({
 				innerdatalist: inner_datalist,
 				innerservicetype: 'all'
 			}
-		}).then((res = {}) =>{
-			if(res.RETN == 0) {
-					let result = res.resp.list;
-					let item = null;					
-					for(let item of result) {
-						let tab_condition = {};
-						tab_condition.index_key = item.index_key;
-						tab_condition.title = Constants.CONDITION_NAME[item.index_key];
-						tab_condition.total_value = Util.formatToZh(item.index_val);
-						tab_condition.annular_ratio = Util.formatDouble(item.index_comp_day_val);
-						tab_condition.cycle_ratio = Util.formatDouble(item.index_comp_week_val);
-						tab_condition.biweekly_ratio = Util.formatDouble(item.index_comp_biweek_val);
-						tab_condition_list.push(tab_condition);						
-					}
-
-					this.setData({
-						historyList: tab_condition_list
-					})	
+		}).then((res = {}) =>{			
+				let result = DataFormat.tranform_result(res);				
+				for(let item of result) {
+					let tab_condition = {};
+					tab_condition.index_key = item.index_key;					
+					tab_condition.title = Constants.CONDITION_NAME[item.index_key];
+					tab_condition.total_value = Util.formatToZh(item[tab_condition.index_key]);
+					tab_condition.annular_ratio = Util.formatDouble(item.comp_day1_money);
+					tab_condition.cycle_ratio = Util.formatDouble(item.comp_week1_money);
+					tab_condition.biweekly_ratio = Util.formatDouble(item.comp_week2_money);
+					tab_condition_list.push(tab_condition);															
 				}
+				tab_condition_list.sort((condition1,condition2) => {
+					return Constants.CONDITION_KEY[condition1.index_key] > Constants.CONDITION_KEY[condition2.index_key] ? 1 : -1;
+				})
+				this.setData({
+					historyList: tab_condition_list
+				})					
 			},err => {
 
 			})		
@@ -93,39 +93,50 @@ Page({
 				innerservicetype: 'all'
 			}
 		}).then((res = {}) =>{
-			// let res = testData.tabLineResult();
-				if(res.RETN == 0) {
-					let result = res.resp.list;
-					for(let item of result) {
-						let tabLine = {};
-						tabLine.key = item.index_key;
-						let canvasData = {
-							line: [{
-								legend: '双周折线',
-					            hidden: false,
-					            point: []
-							}],
-							commFlag: [], 
-							xCoordinate: []
-						};						
-						for(let point of item.index_point) {
-							let line_point = {
-								value: Util.formatDouble(point.point_val)
-							};
-							canvasData.line[0].point.push(line_point);
-						}
-						tabLine.canvasData = canvasData;
-						tabLine.canvasOption = Config.getOption();
-						tabLine.canvasStyle = StyleConfig.litte_line_style;
-						tabLineList.push(tabLine);
-					}
-					this.setData({
-						tabLineList: tabLineList
-					})					
-				}
-			},err => {
+			let result = DataFormat.tranform_result(DataFormat.hh);
 
+			result.sort((a,b) => {
+				return parseInt(a.ds) < parseInt(b.ds) ? -1 : 1;
 			})
+			let keys = Object.keys(Constants.CONDITION_KEY);
+			let keyArray = [];
+			let tabLine = {};
+			let tabLineList = [];
+			let canvasData = {};
+			for(let type of keys) {
+				for(let item of result) {
+					if(item[type]){
+						if(keyArray.indexOf(type) == -1){
+							keyArray.push(type);
+							tabLine = {};
+							canvasData = {
+								line: [{
+									legend: '双周折线',
+						            hidden: false,
+						            point: []
+								}],
+								commFlag: [], 
+								xCoordinate: []
+							};										
+						} 
+						canvasData.line[0].point.push({'value':Util.formatDouble(item[type])});
+						if(canvasData.line[0].point.length == 14) {
+							tabLine.key = type;
+							tabLine.canvasData = canvasData;
+							tabLine.canvasOption = Config.getOption();
+							tabLine.canvasStyle = StyleConfig.litte_line_style;
+							tabLineList.push(tabLine);
+						}
+					}
+				}
+			}						
+			this.setData({
+				tabLineList: tabLineList
+			})					
+				
+		},err => {
+
+		})
 			
 	},
 
@@ -144,36 +155,76 @@ Page({
 				innerservicetype: 'all'
 			}
 		}).then((res = {}) =>{
-				if(res.RETN == 0) {
-					let result = res.resp.list;
-					for(let item of result) {
-						let pvLine = {};
-						pvLine.key = item.index_key;
-						let canvasData = {line:[], commFlag: [], xCoordinate: Util.getXCoordinates(timeStamp)};
-						let legendList = Constants.PV_CHART_LEGEND[item.index_key];
-						for(let line of item.line) {
-							let lineItem = {hidden: false};
-							lineItem.legend = legendList[line.key];
-							lineItem.point = [];
-							for(let point of line.index_point) {
-								let line_point = {
-									value: Util.formatDouble(point.point_val),
-									flag: Util.formatDouble(point.point_val)
-								}
-								lineItem.point.push(line_point);
-							}
-							canvasData.line.push(lineItem);							
-						}
-						pvLine.title = Constants.PV_CHART_NAME[pvLine.key];
+			let result = DataFormat.tranform_result(DataFormat.mm);
+			result.sort((a,b) => {
+				return parseInt(a.ds) < parseInt(b.ds) ? -1 : 1;
+			})
+			let keys = Object.keys(Constants.PV_CHART_KEY);
+			let pvLineList = [];
+			let pvLine = {};
+			let chartTypeList = [];
+			let canvasData = {};			
+			for(let item of result) {
+				let chartType = item.trend_key_type;
+				if(keys.indexOf(chartType) > -1){
+					if(chartTypeList.indexOf(chartType) ==  -1) {
+						chartTypeList.push(chartType);
+						pvLine = {};
+						pvLine.key = chartType;
+						canvasData = {line:[], commFlag: [], xCoordinate: Util.getXCoordinates(timeStamp)};
+						pvLine.lineList = [];
+						pvLine.lineList.push(item.trend_val);
+						let lineItem = {hidden: false};
+						let legendList = Constants.PV_CHART_KEY[chartType];
+						lineItem.legend = legendList[parseInt(item.trend_val)];
+						lineItem.point = [];
+						lineItem.point.push({
+							value: Util.formatDouble(item.msg_pv),
+							flag: Util.formatDouble(item.msg_pv)
+						})
+						canvasData.line.push(lineItem);
 						pvLine.canvasData = canvasData;
 						pvLine.canvasOption = StyleConfig.common_line_option;
 						pvLine.canvasStyle = StyleConfig.common_line_style;
+						pvLine.title = Constants.PV_CHART_NAME[chartType];
 						pvLineList.push(pvLine);
-					}
-					this.setData({
-						pvLineList: pvLineList
-					})					
+					} else {
+						for(let index in pvLineList) {
+							if(pvLineList[index].key == chartType) {
+								let chart = pvLineList[index];
+								if(chart.lineList.indexOf(item.trend_val) == -1) {
+									let lineItem = {hidden: false};
+									let legendList = Constants.PV_CHART_KEY[chartType];
+									lineItem.legend = legendList[parseInt(item.trend_val)];
+									lineItem.point = [];
+									lineItem.point.push({
+										value: Util.formatDouble(item.msg_pv),
+										flag: Util.formatDouble(item.msg_pv)
+									})
+									chart.lineList.push(item.trend_val);
+									chart.canvasData.line.push(lineItem);
+								}
+								else
+								{
+									let lineIndex = chart.lineList.indexOf(item.trend_val);
+									chart.canvasData.line[lineIndex].point.push({
+										value: Util.formatDouble(item.msg_pv),
+										flag: Util.formatDouble(item.msg_pv)
+									})
+								}
+							}
+						}							
+					}						
 				}
+			}
+
+			pvLineList.sort((condition1,condition2) => {
+				return Constants.MSG_PV_KEY[condition1.key] > Constants.MSG_PV_KEY[condition2.key] ? 1 : -1;
+			})
+
+			this.setData({
+				pvLineList: pvLineList
+			})								
 			},err => {
 
 			})		

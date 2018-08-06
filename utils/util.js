@@ -28,7 +28,7 @@ const getTimeStamp = day => {
 }
 
 const twoWeekBeforeTimeStamp = timeStamp => { 
-  let dayBeforeStamp = timeStamp - 60*60*24*14;
+  let dayBeforeStamp = timeStamp - 60*60*24*14 + 1;
   return dayBeforeStamp;
 }
 
@@ -39,7 +39,7 @@ const dayBeforeTimeStamp = (timeStamp, day) => {
 
 const yesterdayTimeStamp = () => {
   let timeStamp = new Date(new Date().setHours(0,0,0,0)) / 1000 ;
-  return timeStamp - 60*60*24;
+  return timeStamp -1 ;
 }
 
 const formatDouble = val => {
