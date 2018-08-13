@@ -1,7 +1,19 @@
 Component({
 	data: {
-        tabs: ["总体","公众号","订阅号"],
-        activeIndex: 0
+        tabs: [
+        {
+            type:'all',
+            title:'总体'
+        },
+        {
+            type:'1',
+            title:"订阅号"
+        },
+        {
+            type:'2',
+            title:"服务号"
+        }],
+        activeIndex: 'all'
     },
     onLoad: function () {
         

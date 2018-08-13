@@ -71,7 +71,9 @@ function formatNumber(number, option) {
 
     //3. 如果是小数，精确小数位
     if (_number % 1 != 0) {
-        _number = _number.toFixed(option.valueToFixed || 2);
+
+        _number = option.valueToFixed !== undefined ?
+         _number.toFixed(option.valueToFixed) : _number.toFixed(2);
     }
 
 

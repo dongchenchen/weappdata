@@ -4,6 +4,10 @@
     "mp-header": "/component/header/header",
     "mp-choose-type": "/component/choose_type/choose_type",
     "mp-trend-panel": "/component/trend_panel/trend_panel",
-    "wxchart-line-chart":"/wxChartComponent/line-chart/line-chart"
+    "wxchart-line-chart":"/wxChartComponent/line-chart/line-chart",
+    "mp-date-picker":"/component/date_picker/date_picker",
+    "wxchart-bar-chart":"/wxChartComponent/bar-chart/bar-chart",
+    "wxchart-table":"/wxChartComponent/table/table",
+    "mp-data-more": "/component/data_more/data_more"
   }
 }

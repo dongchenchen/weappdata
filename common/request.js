@@ -115,16 +115,6 @@ const doRequest = (options = {}, code) => {
         }
 
         const method = options.method || 'GET'
-        // const rejectWrap = (data, reportData) => {
-        //     badjs('cgi_fail', {
-        //         url,
-        //         method,
-        //         data: options.data,
-        //         ...reportData,
-        //     });
-        //     return reject(data)
-        // }
-
         wx.request({
             url: url,
             data: options.data,
@@ -150,20 +140,12 @@ const doRequest = (options = {}, code) => {
                     } else {
                         updateSession(session);
                         console.log(`[fail]${url}:`, data);
-                        // rejectWrap(data, {
-                        //     status_code: statusCode,
-                        //     retcode: ret
-                        // })
                     }
                 } else {
                     console.log(`[err]${url}:`, data);
                     wx.showLoading({
                         title: '系统繁忙',
                     })
-                    // rejectWrap(data, {
-                    //     status_code: statusCode,
-                    //     retcode: ret
-                    // })
                 }
             },
             fail(err = {}) {
@@ -171,10 +153,6 @@ const doRequest = (options = {}, code) => {
                 wx.showLoading({
                     title: '系统繁忙',
                 })
-                // rejectWrap(err, {
-                //     status_code: -1,
-                //     retcode: -1
-                // })
             },
             complete() {
                 options.showLoading && wx.hideLoading()
@@ -253,10 +231,6 @@ const doUploadFile = (options = {}, code) => {
             },
             fail(err = {}) {
                 console.error(`wx.request fail`, err)
-                // rejectWrap(err, {
-                //     status_code: -1,
-                //     retcode: -1
-                // })
             },
             complete() {
                 options.showLoading && wx.hideLoading()

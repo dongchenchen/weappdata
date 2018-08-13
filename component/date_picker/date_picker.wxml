@@ -1,0 +1,10 @@
+<view class="date-area_right">                         
+  <picker mode="date"  value="{{choose_date}}" start="1900-01-01" end="{{current_date}}" bindchange="bindDateChange">
+    <view class="picker">
+        {{choose_date}}
+        <view class="icon-area">
+            <i class="icon-drop"></i>
+        </view>
+    </view>
+  </picker>
+</view>

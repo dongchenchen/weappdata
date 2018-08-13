@@ -21,6 +21,21 @@ Component({
 		'biweekly_ratio': {
 			type: Number
 		}
+	},
+	data: {
+		isClick: false
+	},
+
+	methods: {
+		clickTrend: function(e) {
+			this.data.isClick = !this.data.isClick;
+			this.data.backColor = !this.data.isClick ? '' : '';
+			this.setData({
+				backColor: this.data.backColor,
+				isClick: ! this.data.isClick
+			})
+
+		}
 	}
 
 

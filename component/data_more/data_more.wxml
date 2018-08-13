@@ -1,0 +1,8 @@
+<view class="dropMore-area" bindtap="getMore">
+    <view class="arrow-bottom arrow-box" >
+        <view class="bottom"><view class="bottom-arrow1"></view><view class="bottom-arrow2"></view></view>
+    </view>
+    <view class="arrow-bottom arrow-box" >
+        <view class="bottom"><view class="bottom-arrow1"></view><view class="bottom-arrow2"></view></view>
+    </view>
+</view>

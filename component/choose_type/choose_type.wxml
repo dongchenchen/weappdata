@@ -1,7 +1,7 @@
 <view class="weui-flex">
 	<block wx:for="{{tabs}}" wx:key="{{index}}">
-        <view id="{{index}}" class="weui-flex__item" bindtap="tabClick">
-            <button class="weui-btn mini-btn" type="{{activeIndex == index ? 'primary' : 'default'}}" size="mini">{{item}}</button>
+        <view id="{{item.type}}" class="weui-flex__item" bindtap="tabClick">
+            <button class="weui-btn mini-btn" type="{{activeIndex == item.type ? 'primary' : 'default'}}" size="mini">{{item.title}}</button>
         </view>
     </block>
 </view>

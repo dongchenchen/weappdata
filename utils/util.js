@@ -42,19 +42,40 @@ const yesterdayTimeStamp = () => {
   return timeStamp -1 ;
 }
 
+const yesterdayDate = () => {
+  let yesterdayDate = yesterdayTimeStamp()*1000;
+  return formateDate(new Date(yesterdayDate)); 
+}
+
 const formatDouble = val => {
+  if(val == '' || val == '-'){
+    val = 0;
+  }
   var result = parseFloat(val);
-   result = Math.round(val * 100) / 100;
-   return result;
+  result = Math.round(val * 100) / 100;
+  return result;
+}
+
+const formatRatio = val => {
+  if(val == '' || val == '-'){
+    val = 0;
+  }
+  var result = parseFloat(val);
+  result = Math.round(val * 100);
+  return result;
 }
 
 const formatToZh = val => {
+  if(val == '' || val == '-'){
+    val = 0;
+  }
+  val = parseFloat(val);
   let result = '';
   if (val >= 1000 && val <=9999) {
     val = val/1000;
     val = formatDouble(val);
     result = val + '千';
-  } else if (val >=10000 && val <= 9999999) {
+  } else if (val >=10000 && val <= 99999999) {
     val = val/10000;
     val = formatDouble(val);
     result = val + '万';
@@ -86,7 +107,9 @@ module.exports = {
   twoWeekBeforeTimeStamp: twoWeekBeforeTimeStamp,
   formateDate: formateDate,
   yesterdayTimeStamp: yesterdayTimeStamp,
+  yesterdayDate: yesterdayDate,
   formatDouble: formatDouble,
   getXCoordinates: getXCoordinates,
-  formatToZh: formatToZh
+  formatToZh: formatToZh,
+  formatRatio: formatRatio
 }

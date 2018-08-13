@@ -17,21 +17,9 @@
 	font-size: 24rpx;
 }
 
-mp-header {
-	height:120rpx;
-	display:block;
-	position:fixed;
-	top:0;
-	left:0;
-	right:0;
-	z-index:9999;
-	background-color: #FFF;
-}
-
 mp-choose-type {
 	height:70rpx;
 	display:block;	
-	z-index:0;
 	width:100%;
 }
 

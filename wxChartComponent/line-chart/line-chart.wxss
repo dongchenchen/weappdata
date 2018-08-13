@@ -1,7 +1,7 @@
 /*wxcp: wxchartComponent*/
 .wxcp-linechart {
-    poistion: relative;
-    margin: 20rpx 0 30rpx 0;
+    position: relative;
+    margin: 10rpx 0 30rpx 0;
 }
 
 .wxcp-wording {
@@ -47,15 +47,12 @@
     vertical-align: middle;
 }
 
-
-
 .wxcp-linechart-canvas_base{
     position: relative;
     margin: 10rpx 0 30rpx 0;
-    z-index: -1000;
 }
 .wxcp-linechart-canvas_float{
-    
+    z-index: 2;
     position: absolute;
     top: 0;
 }

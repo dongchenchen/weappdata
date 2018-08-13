@@ -3,14 +3,14 @@
         <view class="wxcp-table">
             <view class="wxcp-table-header" style="{{style.header}}">
                 <view wx:for="{{header}}" wx:for-item="item" wx:for-index="idx"
-                      class="wxcp-table-header_ceil" style="{{item.cssStyle}}"
+                      class="wxcp-table-header_ceil" style="{{item.cssStyle}}" wx:key="idx"
                       bindtap="tapTable" data-type="header" data-col="{{idx}}" data-item="{{item}}">
                     <text>{{item.content}}</text>
                 </view>
             </view>
-            <view wx:for="{{body}}" wx:for-item="row" wx:for-index="ridx" class="wxcp-table-body"
+            <view wx:for="{{body}}" wx:for-item="row" wx:for-index="ridx" class="wxcp-table-body" wx:key="row"
                   style="{{style.body}}">
-                <view wx:for="{{row}}" wx:for-item="item" wx:for-index="cidx"
+                <view wx:for="{{row}}" wx:for-item="item" wx:for-index="cidx" wx:key="cidx"
                       class="wxcp-table-body_ceil" style="{{item.cssStyle}}"
                       bindtap="tapTable" data-type="body" data-row="{{ridx}}" data-col="{{cidx}}" data-item="{{item}}">
                     <text>{{item.content}}</text>

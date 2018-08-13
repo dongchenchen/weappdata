@@ -1,0 +1,40 @@
+.dropMore-area {
+	margin:-10rpx 0rpx 5rpx 0rpx;
+}
+
+.arrow-box{
+    width:30px;
+    height:10px;
+    margin:0px auto;
+    position:relative;
+}
+
+.bottom{
+    width:20px;
+    height:20px;
+    position:absolute;
+    left:0;
+    top:0;
+    z-index: 2;/*兼容ie8-*/
+}
+.bottom-arrow1,.bottom-arrow2{
+    width:0;
+    height:0;
+    display:block;
+    position:absolute;
+    left:0;
+    top:0;
+    z-index: 5;/*兼容ie8-*/
+    border-bottom:10px transparent dashed;
+    border-left:10px transparent dashed;
+    border-right:10px transparent dashed;
+    border-top:10px white solid;
+    overflow:hidden;
+}
+.bottom-arrow1{
+    top:1px;/*重要*/
+    border-top:10px gray solid;
+}
+.bottom-arrow2{
+    border-top:10px white solid;
+}

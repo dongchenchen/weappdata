@@ -61,7 +61,7 @@ Component({
                     chartStatus: ConfigFile.getERRWording(errorCode)
                 })
             }
-            console.log("draw:", this.lineChartHandle);
+            // console.log("draw:", this.lineChartHandle);
         },
 
         //点击图例

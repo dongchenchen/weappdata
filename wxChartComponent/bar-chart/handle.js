@@ -259,6 +259,7 @@ Handle.prototype._privateInitYCoordinateData = function () {
     this.drawData.area.chart.y = this.drawData.area.screen.y;
 }
 
+
 Handle.prototype._privateInitXCoordinateData = function () {
     var {style, data} = this.componentData;
     if (!this.drawData.area.xCoordinate) this.drawData.area.xCoordinate = {};
@@ -279,6 +280,9 @@ Handle.prototype._privateInitXCoordinateData = function () {
     }
     if (style.coordinateSystem.xAxis.show && style.coordinateSystem.xAxis.width) {
         this.drawData.area.xCoordinate.h += style.coordinateSystem.xAxis.width;
+    }
+    if (style.coordinateSystem.dayRatioStyle.show && style.coordinateSystem.dayRatioStyle.width) {
+        this.drawData.area.xCoordinate.h += 50;
     }
 
     // chart区域的宽度跟横坐标区域宽度等宽；
@@ -315,6 +319,52 @@ Handle.prototype._privateInitXCoordinateData = function () {
 
     console.log("bar here:", this, this.drawData.xCoordinate);
 }
+
+// Handle.prototype._privateInitRatio = function (ratioType) {
+//     var {style, data} = this.componentData;
+//     if (!this.drawData.area[ratioType]) this.drawData.area[ratioType] = {};
+
+//     this.drawData.area[ratioType].w = this.drawData.area.chart.w;
+//     this.drawData.area[ratioType].x = this.drawData.area.chart.x;
+//     this.drawData.area[ratioType].h = 0;
+    
+//     if (style.coordinateSystem.xAxis.show && style.coordinateSystem.xAxis.width) {
+//         this.drawData.area[ratioType].h += style.coordinateSystem.xAxis.width;
+//     }
+
+//     // chart区域的宽度跟横坐标区域宽度等宽；
+//     // 那么可以算出每个横坐标wording能占的宽度
+//     // 结合“rotateDegree”，进而得到最大wordwidth
+//     // 进而限制横坐标wording长度（用省略号代替）
+//     var count = data.series.reduce((a, b)=>Math.max(a, b.bar.length), 0); // 在CheckConfig的时候确保了这个值不为零
+//     var allowWordWidth = this.drawData.area.chart.w / count;
+
+//     // 注：allowWordWidth = realWordWidth * Math.cos(rotateRadio) + realWordHeight * Math.sin(rotateRadio)
+//     // allowWordHight = realWordWidth * Math.sin(rotateRadio) + realWordHeight * Math.cos(rotateRadio)
+//     var realWordHeight = Utils.getWordHeight('', style.coordinateSystem.xCoordinate.fontSize);
+//     var rotateRadio = style.coordinateSystem.xCoordinate.rotateRadio;
+//     var realWordWidth;
+//     if (rotateRadio == 90 || rotateRadio == 270) realWordWidth = Infinity;
+//     else realWordWidth = ( allowWordWidth - realWordHeight * Math.abs(Math.sin(Utils.deg2rad(rotateRadio))) ) / Math.abs(Math.cos(Utils.deg2rad(rotateRadio)));
+
+//     // 把value生成好
+//     if (!this.drawData.xCoordinate) this.drawData.xCoordinate = {};
+//     this.drawData.xCoordinate.values = data.dayRatio.reduce((a, b)=>a.concat(Utils.textOverflow(b, style.coordinateSystem.xCoordinate.fontSize, realWordWidth)), []);
+//     var maxWordWidth = this.drawData.dayRatio.values.reduce((a, b)=>Math.max(a, Utils.getWordWidth(b, style.coordinateSystem.xCoordinate.fontSize)), 0);
+
+//     // 计算area
+//     var allowWordHight = maxWordWidth * Math.abs(Math.sin(Utils.deg2rad(rotateRadio))) + realWordHeight * Math.abs(Math.cos(Utils.deg2rad(rotateRadio)));
+//     this.drawData.area.dayRatio.h += allowWordHight;
+//     this.drawData.area.dayRatio.y = this.drawData.area.screen.h - this.drawData.area.dayRatio.h + this.drawData.area.screen.y;
+
+//     this.drawData.area.dayRatio.h = this.drawData.area.screen.h - this.drawData.area.dayRatio.h - this.drawData.area.dayRatio.y + this.drawData.area.screen.y;
+//     this.drawData.area.chart.h = this.drawData.area.screen.h - this.drawData.area.dayRatio.h;
+
+//     this.drawData.dayRatio.allowWordHight = allowWordHight;
+//     this.drawData.dayRatio.allowWordWidth = allowWordWidth;
+
+//     console.log("bar here:", this, this.drawData.xCoordinate);
+// }
 
 Handle.prototype._testArea = function () {
     {
@@ -416,31 +466,37 @@ Handle.prototype._privateDrawXCoordinate = function () {
     var ctx = this.ctx;
     var area = this.drawData.area.xCoordinate;
     var data = this.drawData.xCoordinate;
-    var drawXCoordinate = (style, xAxisStyle)=> {
+    var dayRatioData = this.componentData.data.dayRatio;
+    var weekRatioData = this.componentData.data.weekRatio;
+
+    var drawXCoordinate = (style, xAxisStyle, dayRatioStyle)=> {
         if (!style.show) return;
         if (data.values.length == 0) return;
 
         // var delta = area.x / data.values.length;
         var x = area.x + data.allowWordWidth / 2;
         var y = area.y + style.marginTop + data.allowWordHight / 2;
+
+
         if (xAxisStyle.show && xAxisStyle.width) y += xAxisStyle.width;
+        if (dayRatioStyle && dayRatioStyle.show && dayRatioStyle.width) y+= 10;
+
         for (var i = 0; i < data.values.length; ++i) {
             ctx.save();
             ctx.translate(x, y);
             ctx.rotate(Utils.deg2rad(style.rotateRadio));
-            ctx.setTextAlign('center');
+            ctx.setTextAlign('left');
             ctx.setTextBaseline('middle');
             ctx.setFontSize(style.fontSize);
             ctx.setFillStyle(style.color);
             ctx.fillText(data.values[i], 0, 0);
             ctx.restore();
-
             x += data.allowWordWidth;
-        }
+        }                   
     }
+
     var drawXAxis = (style)=> {
         if (!style.show) return;
-
         ctx.setStrokeStyle(style.color);
         ctx.setLineWidth(style.width);
         var x = area.x;
@@ -449,12 +505,77 @@ Handle.prototype._privateDrawXCoordinate = function () {
         ctx.moveTo(x, y);
         ctx.lineTo(x + area.w, y);
         ctx.stroke();
+        
+        
+    }
+
+    var drawDayRatio = (style) => {
+        if(!style.show) return;
+        if(dayRatioData.length === 0) return;
+        ctx.setStrokeStyle(style.color);
+        ctx.setLineWidth(style.width);
+        var x = area.x + data.allowWordWidth / 2;
+        var y = area.y + 10;
+        for (var i = 0; i < data.values.length; ++i) {
+            ctx.save();
+            ctx.translate(x, y);           
+            ctx.setTextAlign('center');
+            ctx.setTextBaseline('middle');
+            ctx.setFontSize(style.fontSize);
+            ctx.setFillStyle(parseFloat(dayRatioData[i])*100 >= 0 ? 'red' : 'green');
+            ctx.fillText(dayRatioData[i]*100 + '%', 0, 0);
+            ctx.restore();
+            x += data.allowWordWidth;
+        }  
+
+        x = area.x;
+        y = area.y  + 20 + style.width;
+        ctx.setStrokeStyle(style.color);
+        ctx.setLineWidth(style.width);
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + area.w, y);
+        ctx.stroke();
+    }
+
+    var drawWeekRatio = (style) => {
+        if(!style.show) return;
+        if(weekRatioData.length === 0) return;
+        ctx.setStrokeStyle(style.color);
+        ctx.setLineWidth(style.width);
+        var x = area.x + data.allowWordWidth / 2;
+        var y = area.y + 30;
+        for (var i = 0; i < data.values.length; ++i) {
+            ctx.save();
+            ctx.translate(x, y);           
+            ctx.setTextAlign('center');
+            ctx.setTextBaseline('middle');
+            ctx.setFontSize(style.fontSize);
+            ctx.setFillStyle(parseFloat(dayRatioData[i])*100 >= 0 ? 'red' : 'green');
+            ctx.fillText(weekRatioData[i]*100 + '%', 0, 0);
+            ctx.restore();
+            x += data.allowWordWidth;
+        }  
+
+        x = area.x;
+        y = area.y + 40 + style.width;
+        ctx.setStrokeStyle(style.color);
+        ctx.setLineWidth(style.width);
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + area.w, y);
+        ctx.stroke();
     }
 
     var xCoordinateStyle = this.componentData.style.coordinateSystem.xCoordinate;
     var xAxisStyle = this.componentData.style.coordinateSystem.xAxis;
-    drawXCoordinate(xCoordinateStyle, xAxisStyle);
+    var dayRatioStyle = this.componentData.style.coordinateSystem.dayRatioStyle;
+    var weekRatioStyle = this.componentData.style.coordinateSystem.weekRatioStyle;
+    drawXCoordinate(xCoordinateStyle, xAxisStyle, dayRatioStyle);
     drawXAxis(xAxisStyle);
+    drawDayRatio(dayRatioStyle);
+    drawWeekRatio(weekRatioStyle);
+
 }
 
 Handle.prototype._privateDrawChart = function () {
@@ -506,6 +627,7 @@ Handle.prototype._privateDrawChart = function () {
 
                 yBase -= style.number.marginBottom + strHeight + style.number.marginTop;
             }
+
 
             // percentageNumber
             if (style.percentageNumber.show) {

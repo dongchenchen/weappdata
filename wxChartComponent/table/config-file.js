@@ -23,10 +23,9 @@ var config = {
         valueToFixed: 2,                             //数据含小数，规整为几位小数
         valueToCollated: [
             {rangeStart: 0, rangeEnd: 1e4, base: 1, wording: ''},
-            {rangeStart: 1e4, rangeEnd: 1e5, base: 1e3, wording: '千'},   //range: {x | 1000 <= x < 10000}  9999 -> 9.99千
-            {rangeStart: 1e5, rangeEnd: 1e8, base: 1e4, wording: '万'},
-            {rangeStart: 1e8, rangeEnd: 1e9, base: 1e7, wording: '千万'},
-            {rangeStart: 1e9, rangeEnd: Infinity, base: 1e8, wording: '亿'},
+            {rangeStart: 1e4, rangeEnd: 1e5, base: 1e3, wording: 'k'},   //range: {x | 1000 <= x < 10000}  9999 -> 9.99千
+            {rangeStart: 1e5, rangeEnd: 1e8, base: 1e4, wording: 'w'},
+            {rangeStart: 1e8, rangeEnd: 1e9, base: Infinity, wording: 'kw'}
         ],      //数据规整
         valueUseComma: true,                         //数据是否加千位分隔符
         valueToColor: {
@@ -117,7 +116,7 @@ function getData() {
     return _createCanvasData();
 }
 function getOption() {
-    console.log("!!!1: ", config.option);
+    // console.log("!!!1: ", config.option);
     var b = Utils.deepCopy(config.option);
     console.log("!!!2: ", b);
     return b;

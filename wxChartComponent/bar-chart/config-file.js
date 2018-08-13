@@ -22,11 +22,10 @@ var config = {
 
         valueToFixed: 1, //数据含小数，规整为几位小数
         valueToCollated: [
-            {rangeStart: 0, rangeEnd: 1e3, base: 1, wording: ''},
-            {rangeStart: 1e3, rangeEnd: 1e5, base: 1e3, wording: '千'},   //range: {x | 1000 <= x < 10000}  9999 -> 9.99千
-            {rangeStart: 1e5, rangeEnd: 1e8, base: 1e4, wording: '万'},
-            {rangeStart: 1e8, rangeEnd: 1e9, base: 1e7, wording: '千万'},
-            {rangeStart: 1e9, rangeEnd: Infinity, base: 1e8, wording: '亿'},
+            {rangeStart: 0, rangeEnd: 1e3, base: 1, wording: 'kw'},
+            {rangeStart: 1e3, rangeEnd: 1e5, base: 1e3, wording: 'k'},   //range: {x | 1000 <= x < 10000}  9999 -> 9.99千
+            {rangeStart: 1e5, rangeEnd: 1e8, base: 1e4, wording: 'w'},
+            {rangeStart: 1e8, rangeEnd: Infinity, base: 1e7, wording: 'kw'}
         ],      //数据规整
         valueUsdComma: true, //数据是否加千位分隔符
 
@@ -103,6 +102,20 @@ var config = {
                 marginLeft: 10,
                 marginRight: 10,
             }, //纵坐标
+            dayRatioStyle: {
+                show: false,
+                color: '#7587DB',
+                width: 4,
+                itemHeight: 10,
+                margin: 10
+            },
+            weekRatioStyle: {
+                show: false,
+                color: '#8EE153',
+                width: 4,
+                itemHeight: 10,
+                margin: 10
+            }
         },
 
         // 跟据条形柱的条数 + 横坐标宽度自适应间隔，当bar的数据过多，或柱子宽度过大，可能实际宽度不会被满足；
